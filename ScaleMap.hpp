@@ -42,6 +42,15 @@ namespace instmt
 
 		Pitch(const unsigned int midiNoteNumber, const unsigned int pitchName, const unsigned int octave, const float frequency)
 			: midiNoteNumber(midiNoteNumber), pitchName((PitchName)pitchName), octave(octave), frequency(frequency) {}
+
+		Pitch& operator=(const Pitch& pitch)
+		{
+			this->frequency = pitch.frequency;
+			this->midiNoteNumber = pitch.midiNoteNumber;
+			this->octave = pitch.octave;
+			this->pitchName = pitch.pitchName;
+			return (*this);
+		}
 	};
 
 
@@ -209,8 +218,8 @@ namespace instmt
 			auto index = first - scale.begin();		// 1番近い値を取り出す
 			
 			// frequencyとの距離を調べて近い方を返す
-			auto a = Abs(scale[index].frequency - frequency);
-			auto b = Abs(scale[index - 1].frequency - frequency);
+			auto a = abs(scale[index].frequency - frequency);
+			auto b = abs(scale[index - 1].frequency - frequency);
 
 			if (a <= b)
 				return scale[index];
