@@ -187,18 +187,6 @@ namespace instmt
 		}
 
 		/**
-		* ピッチ名とオクターブ数から周波数を取得する
-		* @param pitchName ピッチ名
-		* @param octavePitch オクターブ
-		* @return 周波数
-		*/
-		inline float GetFreq(const PitchName pitchName, const unsigned int octave) const
-		{
-			auto index = octave * 12 + (unsigned int)pitchName;
-			return scale[index].frequency;
-		}
-
-		/**
 		* 周波数からピッチを割り出す
 		* @param frequency 周波数
 		* @return ピッチ
