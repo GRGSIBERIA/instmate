@@ -42,7 +42,6 @@ namespace instmt
 
 		Pitch(const unsigned int midiNoteNumber, const unsigned int pitchName, const unsigned int octave, const float frequency)
 			: midiNoteNumber(midiNoteNumber), pitchName((PitchName)pitchName), octave(octave), frequency(frequency) {}
-
 	};
 
 
@@ -54,13 +53,14 @@ namespace instmt
 	private:
 		vector<Pitch> scale;				// スケール
 		unsigned int maxScientificPitch;	// 国際的ピッチ表記の最大値
+		unsigned int minMidiNoteNumber;
 
 	public:
 		/**
 		* スケール表記の地図クラス
 		*/
 		ScaleMap()
-			: maxScientificPitch(9)	// 0～8までのピッチ
+			: maxScientificPitch(9), minMidiNoteNumber(12)	// 0～8までのピッチ
 		{
 			scale = {
 				Pitch(12, 0, 0, 16.35159783f  ),
@@ -226,7 +226,7 @@ namespace instmt
 		*/
 		inline const Pitch& GetPitch(const unsigned int midiNoteNumber) const
 		{
-			return scale[midiNoteNumber - 12];
+			return scale[midiNoteNumber - minMidiNoteNumber];
 		}
 
 		/**
@@ -252,5 +252,31 @@ namespace instmt
 			auto index = octave * 12 + pitchName;
 			return scale[index];
 		}
+
+		/**
+		* ベースになるピッチから上昇/下降を行う
+		* @param basePitch 元になるピッチ
+		* @param difference 上昇/下降させたい値
+		* @param roundable out of rangeになりそうな場合，自動的に数値を丸めるか
+		*/
+		inline const Pitch& ChangePitch(const Pitch& basePitch, const int difference, const bool roundable=true) const
+		{
+			int index = basePitch.midiNoteNumber - minMidiNoteNumber + difference;
+			if (!roundable)
+			{
+				if (index >= scale.size() || index < 0)
+					throw std::out_of_range("ScaleMap::UpPitch() : index out of range.");
+			}
+			else
+			{
+				if (index >= scale.size())
+					index = scale.size() - 1;
+				else if (index < 0)
+					index = 0;
+			}
+			return scale[index];
+		}
+
+		
 	};
 }
