@@ -43,14 +43,6 @@ namespace instmt
 		Pitch(const unsigned int midiNoteNumber, const unsigned int pitchName, const unsigned int octave, const float frequency)
 			: midiNoteNumber(midiNoteNumber), pitchName((PitchName)pitchName), octave(octave), frequency(frequency) {}
 
-		Pitch& operator=(const Pitch& pitch)
-		{
-			this->frequency = pitch.frequency;
-			this->midiNoteNumber = pitch.midiNoteNumber;
-			this->octave = pitch.octave;
-			this->pitchName = pitch.pitchName;
-			return (*this);
-		}
 	};
 
 
@@ -217,13 +209,16 @@ namespace instmt
 			auto first = std::lower_bound(scale.begin(), scale.end(), freq_buf, [](const Pitch& lhs, const Pitch& rhs) -> bool { return lhs.frequency < rhs.frequency; });
 			auto index = first - scale.begin();		// 1番近い値を取り出す
 			
+			if (index + 1 == scale.size())
+				return scale[index];
+
 			// frequencyとの距離を調べて近い方を返す
 			auto a = abs(scale[index].frequency - frequency);
-			auto b = abs(scale[index - 1].frequency - frequency);
+			auto b = abs(scale[index + 1].frequency - frequency);
 
-			if (a <= b)
+			if (a < b)
 				return scale[index];
-			return scale[index - 1];
+			return scale[index + 1];
 		}
 
 		/**
@@ -238,12 +233,12 @@ namespace instmt
 
 		/**
 		* MIDIノートナンバーからピッチを取得する
-		* @param midiNoteNumber MIDIノートナンバー, 16～131
+		* @param midiNoteNumber MIDIノートナンバー, 12～131
 		* @return ピッチ
 		*/
 		inline const Pitch& GetPitch(const unsigned int midiNoteNumber) const
 		{
-			return scale[midiNoteNumber - 16];
+			return scale[midiNoteNumber - 12];
 		}
 
 		/**
