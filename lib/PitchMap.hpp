@@ -36,12 +36,26 @@ namespace instmt
 		float frequency;				// 周波数
 
 	public:
-		
 		Pitch(const unsigned int midiNoteNumber, const PitchName pitchName, const unsigned int octave, const float frequency)
 			: midiNoteNumber(midiNoteNumber), pitchName(pitchName), octave(octave), frequency(frequency) {}
 
 		Pitch(const unsigned int midiNoteNumber, const unsigned int pitchName, const unsigned int octave, const float frequency)
 			: midiNoteNumber(midiNoteNumber), pitchName((PitchName)pitchName), octave(octave), frequency(frequency) {}
+
+		Pitch() {}
+
+		/**
+		* コピーなしの代入
+		* @param lhs 代入先のインスタンス
+		* @param rhs 代入したいインスタンス
+		*/
+		static void Substitute(Pitch& lhs, const Pitch& rhs) 
+		{
+			lhs.frequency = rhs.frequency;
+			lhs.midiNoteNumber = rhs.midiNoteNumber;
+			lhs.octave = rhs.octave;
+			lhs.pitchName = rhs.pitchName;
+		}
 	};
 
 
@@ -276,7 +290,5 @@ namespace instmt
 			}
 			return scale[index];
 		}
-
-		
 	};
 }

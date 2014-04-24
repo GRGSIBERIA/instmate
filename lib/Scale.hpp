@@ -34,9 +34,11 @@ namespace instmt
 			for (int i = 0; itr != firstPitches.end(); ++itr, ++i)
 			{
 				auto midiNum = itr->midiNoteNumber;
-				for (int j = 0; j < numberOfFrets; ++j)
+				for (unsigned int j = 0; j < numberOfFrets; ++j)
 				{
-					this->pitches[i * numberOfFrets + j] = pitchMap.GetPitch(midiNum + j);
+					auto rhs = pitchMap.GetPitch(midiNum + j);
+					auto lhs = this->pitches[i * numberOfFrets + j];
+					Pitch::Substitute(lhs, rhs);
 				}
 			}
 		}
