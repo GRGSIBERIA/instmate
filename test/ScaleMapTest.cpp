@@ -1,4 +1,4 @@
-#include "stdafx.h"
+ï»¿#include "stdafx.h"
 #include "CppUnitTest.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
@@ -25,11 +25,18 @@ namespace instmatetest
 			auto test = map.GetPitch(pitchNumber, octave);
 			Assert::AreEqual(test.midiNoteNumber, noteNum);
 		}
+
+		void CheckChangePitch(const instmt::ScaleMap& map, const unsigned int noteNum, const int changePitch, const unsigned int checkNoteNum)
+		{
+			auto test = map.GetPitch(noteNum);
+			auto res = map.ChangePitch(test, changePitch);
+			Assert::AreEqual(res.midiNoteNumber, checkNoteNum);
+		}
 	public:
 		
 		TEST_METHOD(TestMidiNoteNumber)
 		{
-			// TODO: ƒeƒXƒg ƒR[ƒh‚ğ‚±‚±‚É‘}“ü‚µ‚Ü‚·
+			// TODO: ãƒ†ã‚¹ãƒˆ ã‚³ãƒ¼ãƒ‰ã‚’ã“ã“ã«æŒ¿å…¥ã—ã¾ã™
 			instmt::ScaleMap map;
 			CheckMidiNoteNumber(map, 12, (instmt::PitchName)0);
 			CheckMidiNoteNumber(map, 12, instmt::C);
@@ -55,5 +62,13 @@ namespace instmatetest
 			CheckPitchNumberOctave(map, 9, 3, 57);
 		}
 
+		TEST_METHOD(TestChangePitch)
+		{
+			instmt::ScaleMap map;
+			CheckChangePitch(map, 12, 5, 17);
+			CheckChangePitch(map, 12, -1, 12);	// ä¸¸ã‚ãƒ†ã‚¹ãƒˆ
+			CheckChangePitch(map, 131, -6, 125);
+			CheckChangePitch(map, 131, 5, 131);	// ä¸¸ã‚ãƒ†ã‚¹ãƒˆ
+		}
 	};
 }
