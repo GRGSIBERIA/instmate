@@ -22,12 +22,35 @@ namespace instmt
 		class ExtensionBase
 		{
 		protected:
-			unsigned int step;	// 度数, 0 = 1度
+			unsigned int step;	// 度数, 0 = 1度，1 = 短2度
 			ExtensionType type;
 
 		public:
 			ExtensionBase(const unsigned int step, ExtensionType type)
 				: step(step), type(type) {}
+		};
+
+		/**
+		* コードのベースになるクラス
+		*/
+		class Chord
+		{
+		protected:
+			Pitch basePitch;
+			vector<ExtensionBase> extentions;
+
+		public:
+			Chord(const Pitch& pitch, const vector<ExtensionBase>& extentions)
+				: extentions(extentions) 
+			{
+				Pitch::Substitute(basePitch, pitch);
+			}
+
+			Chord& operator+(const ExtensionBase& add)
+			{
+				extentions.push_back(add);
+				return (*this);
+			}
 		};
 
 		/**
@@ -67,7 +90,7 @@ namespace instmt
 		{
 		public:
 			Sus4()
-				: ExtensionBase(6, ExtensionType::Third) {}
+				: ExtensionBase(5, ExtensionType::Third) {}
 		};
 
 		/**
@@ -107,7 +130,7 @@ namespace instmt
 		{
 		public:
 			Flat5th()
-				: ExtensionBase(7, ExtensionType::Fifth) {}
+				: ExtensionBase(6, ExtensionType::Fifth) {}
 		};
 
 		/**
@@ -117,7 +140,7 @@ namespace instmt
 		{
 		public:
 			Perfect5th()
-				: ExtensionBase(8, ExtensionType::Fifth) {}
+				: ExtensionBase(7, ExtensionType::Fifth) {}
 		};
 
 		/**
@@ -127,7 +150,7 @@ namespace instmt
 		{
 		public:
 			Sharp5th()
-				: ExtensionBase(9, ExtensionType::Fifth) {}
+				: ExtensionBase(8, ExtensionType::Fifth) {}
 		};
 
 		/**
@@ -148,6 +171,76 @@ namespace instmt
 		public:
 			Add4()
 				: ExtensionBase(5, ExtensionType::Tension) {}
+		};
+
+		/**
+		* 9度を付加
+		*/
+		class Add9th : public ExtensionBase
+		{
+		public:
+			Add9th()
+				: ExtensionBase(14, ExtensionType::Tension) {}
+		};
+
+		/**
+		* #9度を付加
+		*/
+		class AddFlat9th : public ExtensionBase
+		{
+		public:
+			AddFlat9th()
+				: ExtensionBase(13, ExtensionType::Tension) {}
+		};
+
+		/**
+		* b9度を付加
+		*/
+		class AddSharp9th : public ExtensionBase
+		{
+		public:
+			AddSharp9th()
+				: ExtensionBase(15, ExtensionType::Tension) {}
+		};
+
+		/**
+		* 11度を付加
+		*/
+		class Add11th : public ExtensionBase
+		{
+		public:
+			Add11th()
+				: ExtensionBase(18, ExtensionType::Tension) {}
+		};
+
+		/**
+		* #11度を付加
+		*/
+		class AddSharp11th : public ExtensionBase
+		{
+		public:
+			AddSharp11th()
+				: ExtensionBase(19, ExtensionType::Tension) {}
+		};
+
+		/**
+		* 13度を付加
+		*/
+		class Add13th : public ExtensionBase
+		{
+		public:
+			Add13th()
+				: ExtensionBase(22, ExtensionType::Tension) {}
+		};
+
+		/**
+		* b13度を付加
+		*/
+		class AddFlat13th : public ExtensionBase
+		{
+		public:
+			AddFlat13th()
+				: ExtensionBase(21, ExtensionType::Tension) {}
 		};
 	}
 }
