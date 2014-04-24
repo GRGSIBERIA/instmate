@@ -1,9 +1,9 @@
-#include "Scale.hpp"
+ï»¿#include "Scale.hpp"
 
 namespace instmt
 {
 	/**
-	* ƒMƒ^[‚ÌƒŒƒMƒ…ƒ‰[ƒ`ƒ…[ƒjƒ“ƒO
+	* ã‚®ã‚¿ãƒ¼ã®ãƒ¬ã‚®ãƒ¥ãƒ©ãƒ¼ãƒãƒ¥ãƒ¼ãƒ‹ãƒ³ã‚°
 	*/
 	class GuitarRegularTuning : public Strings
 	{
@@ -22,7 +22,7 @@ namespace instmt
 	};
 
 	/**
-	* ƒMƒ^[‚ÌƒhƒƒbƒvDƒ`ƒ…[ƒjƒ“ƒO
+	* ã‚®ã‚¿ãƒ¼ã®ãƒ‰ãƒ­ãƒƒãƒ—Dãƒãƒ¥ãƒ¼ãƒ‹ãƒ³ã‚°
 	*/
 	class GuitarDropDTuning : public Strings
 	{
