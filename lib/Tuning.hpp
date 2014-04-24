@@ -28,7 +28,7 @@ namespace instmt
 	{
 	public:
 		GuitarDropDTuning(const PitchMap& map)
-			: Strings(map, 6, 24, {
+			: Strings(map, 6, 25, {
 			map.GetPitch(PitchName::D, 2),
 			map.GetPitch(PitchName::A, 2),
 			map.GetPitch(PitchName::D, 3),
