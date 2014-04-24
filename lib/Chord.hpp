@@ -48,14 +48,36 @@ namespace instmt
 			vector<Pitch> pitches;	// コードを構成するピッチ
 
 		public:
-			Chord(const PitchMap& map, const Pitch& pitch, const vector<ExtensionBase>& extentions)
+			Chord(const PitchMap& map, const Pitch& pitch, const vector<ExtensionBase>& extentions = {})
 			{
 				Pitch::Substitute(basePitch, pitch);
 
+				// 構成音を追加する
 				for (auto itr = extentions.begin(); itr != extentions.end(); ++itr)
 				{
-					pitches.push_back(itr->ToPitch(map, basePitch));
+					AddExtension(map, *itr);
 				}
+			}
+
+			/**
+			* 構成音を追加する
+			* @param map ピッチの表
+			* @param ext 追加したいExtension
+			*/
+			inline const Pitch AddExtension(const PitchMap& map, const ExtensionBase& ext)
+			{
+				auto pitch = ext.ToPitch(map, basePitch);
+				auto index = lower_bound(pitches.begin(), pitches.end(), pitch, [](const Pitch& lhs, const Pitch& rhs) -> bool { return lhs.pitchName < rhs.pitchName; });
+				pitches.insert(index, pitch);
+			}
+
+			/**
+			* pitchesの中身を正規化する
+			* @note 不協和音の入っていない状態に直す
+			*/
+			inline const bool Normalize()
+			{
+
 			}
 		};
 
