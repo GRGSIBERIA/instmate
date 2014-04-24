@@ -28,6 +28,14 @@ namespace instmt
 		public:
 			ExtensionBase(const unsigned int step, ExtensionType type)
 				: step(step), type(type) {}
+
+			/**
+			* 度数(step)からPitchに変換する
+			*/
+			const Pitch& ToPitch(const PitchMap& map, const Pitch& base) const
+			{
+				return map.ChangePitch(base, step);
+			}
 		};
 
 		/**
@@ -36,20 +44,18 @@ namespace instmt
 		class Chord
 		{
 		protected:
-			Pitch basePitch;
-			vector<ExtensionBase> extentions;
+			Pitch basePitch;		// ベースになるピッチ
+			vector<Pitch> pitches;	// コードを構成するピッチ
 
 		public:
-			Chord(const Pitch& pitch, const vector<ExtensionBase>& extentions)
-				: extentions(extentions) 
+			Chord(const PitchMap& map, const Pitch& pitch, const vector<ExtensionBase>& extentions)
 			{
 				Pitch::Substitute(basePitch, pitch);
-			}
 
-			Chord& operator+(const ExtensionBase& add)
-			{
-				extentions.push_back(add);
-				return (*this);
+				for (auto itr = extentions.begin(); itr != extentions.end(); ++itr)
+				{
+					pitches.push_back(itr->ToPitch(map, basePitch));
+				}
 			}
 		};
 
@@ -180,27 +186,27 @@ namespace instmt
 		{
 		public:
 			Add9th()
-				: ExtensionBase(14, ExtensionType::Tension) {}
-		};
-
-		/**
-		* #9度を付加
-		*/
-		class AddFlat9th : public ExtensionBase
-		{
-		public:
-			AddFlat9th()
-				: ExtensionBase(13, ExtensionType::Tension) {}
+				: ExtensionBase(2 + 12, ExtensionType::Tension) {}
 		};
 
 		/**
 		* b9度を付加
 		*/
+		class AddFlat9th : public ExtensionBase
+		{
+		public:
+			AddFlat9th()
+				: ExtensionBase(1 + 12, ExtensionType::Tension) {}
+		};
+
+		/**
+		* #9度を付加
+		*/
 		class AddSharp9th : public ExtensionBase
 		{
 		public:
 			AddSharp9th()
-				: ExtensionBase(15, ExtensionType::Tension) {}
+				: ExtensionBase(3 + 12, ExtensionType::Tension) {}
 		};
 
 		/**
@@ -210,7 +216,7 @@ namespace instmt
 		{
 		public:
 			Add11th()
-				: ExtensionBase(18, ExtensionType::Tension) {}
+				: ExtensionBase(6 + 12, ExtensionType::Tension) {}
 		};
 
 		/**
@@ -220,7 +226,7 @@ namespace instmt
 		{
 		public:
 			AddSharp11th()
-				: ExtensionBase(19, ExtensionType::Tension) {}
+				: ExtensionBase(7 + 12, ExtensionType::Tension) {}
 		};
 
 		/**
@@ -230,7 +236,7 @@ namespace instmt
 		{
 		public:
 			Add13th()
-				: ExtensionBase(22, ExtensionType::Tension) {}
+				: ExtensionBase(10 + 12, ExtensionType::Tension) {}
 		};
 
 		/**
@@ -240,7 +246,7 @@ namespace instmt
 		{
 		public:
 			AddFlat13th()
-				: ExtensionBase(21, ExtensionType::Tension) {}
+				: ExtensionBase(9 + 12, ExtensionType::Tension) {}
 		};
 	}
 }
