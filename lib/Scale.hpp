@@ -4,20 +4,20 @@ using namespace std;
 
 namespace instmt
 {
-	class Instrument
+	class Scale
 	{
 	protected:
 		vector<Pitch> pitches;
 
-		Instrument(const unsigned int size)
+		Scale(const unsigned int size)
 			: pitches(size) {}
 	};
 
-	class Strings : public Instrument
+	class Strings : public Scale
 	{
 	public:
-		Strings(const PitchMap& pitchMap, const unsigned int numberOfStrings, const unsigned int numberOfFrets, const unsigned int pitchHeightOfNextString, const vector<Pitch>& firstPitches)
-			: Instrument(numberOfStrings * numberOfFrets)
+		Strings(const PitchMap& pitchMap, const unsigned int numberOfStrings, const unsigned int numberOfFrets, const vector<Pitch>& firstPitches)
+			: Scale(numberOfStrings * numberOfFrets)
 		{
 			auto itr = firstPitches.begin();
 			for (int i = 0; itr != firstPitches.end(); ++itr, ++i)
@@ -30,5 +30,4 @@ namespace instmt
 			}
 		}
 	};
-
 }
