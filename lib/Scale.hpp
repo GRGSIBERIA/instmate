@@ -39,8 +39,7 @@ namespace instmt
 				for (unsigned int j = 0; j < numberOfFrets; ++j)
 				{
 					auto rhs = pitchMap.GetPitch(midiNum + j);
-					auto lhs = this->pitches[i * numberOfFrets + j];
-					Pitch::Substitute(lhs, rhs);
+					Pitch::Substitute(this->pitches[i * numberOfFrets + j], rhs);
 				}
 			}
 		}
