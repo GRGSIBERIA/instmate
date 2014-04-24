@@ -48,7 +48,7 @@ namespace instmt
 	/**
 	* スケール表記の地図クラス
 	*/
-	class ScaleMap
+	class PitchMap
 	{
 	private:
 		vector<Pitch> scale;				// スケール
@@ -59,7 +59,7 @@ namespace instmt
 		/**
 		* スケール表記の地図クラス
 		*/
-		ScaleMap()
+		PitchMap()
 			: maxScientificPitch(9), minMidiNoteNumber(12)	// 0～8までのピッチ
 		{
 			scale = {
@@ -265,7 +265,7 @@ namespace instmt
 			if (!roundable)
 			{
 				if (index >= (int)scale.size() || index < 0)
-					throw std::out_of_range("ScaleMap::UpPitch() : index out of range.");
+					throw std::out_of_range("PitchMap::UpPitch() : index out of range.");
 			}
 			else
 			{

@@ -1,5 +1,5 @@
 #include <vector>
-#include "ScaleMap.hpp"
+#include "PitchMap.hpp"
 using namespace std;
 
 namespace instmt
@@ -16,7 +16,7 @@ namespace instmt
 	class Strings : public Instrument
 	{
 	public:
-		Strings(const ScaleMap& scaleMap, const unsigned int numberOfStrings, const unsigned int numberOfFrets, const unsigned int pitchHeightOfNextString, const vector<Pitch>& firstPitches)
+		Strings(const PitchMap& pitchMap, const unsigned int numberOfStrings, const unsigned int numberOfFrets, const unsigned int pitchHeightOfNextString, const vector<Pitch>& firstPitches)
 			: Instrument(numberOfStrings * numberOfFrets)
 		{
 			auto itr = firstPitches.begin();
@@ -25,7 +25,7 @@ namespace instmt
 				auto midiNum = itr->midiNoteNumber;
 				for (int j = 0; j < numberOfFrets; ++j)
 				{
-					this->pitches[i * numberOfFrets + j] = scaleMap.GetPitch(midiNum + j);
+					this->pitches[i * numberOfFrets + j] = pitchMap.GetPitch(midiNum + j);
 				}
 			}
 		}
