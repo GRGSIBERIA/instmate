@@ -1,4 +1,5 @@
-﻿#include "Scale.hpp"
+﻿#pragma once
+#include "Scale.hpp"
 
 namespace instmt
 {

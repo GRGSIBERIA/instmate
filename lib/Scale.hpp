@@ -1,4 +1,6 @@
-﻿#include <vector>
+﻿#pragma once
+
+#include <vector>
 #include "PitchMap.hpp"
 using namespace std;
 
