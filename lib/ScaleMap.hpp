@@ -1,4 +1,4 @@
-#include <vector>
+﻿#include <vector>
 #include <algorithm>
 using namespace std;
 
@@ -264,12 +264,12 @@ namespace instmt
 			int index = basePitch.midiNoteNumber - minMidiNoteNumber + difference;
 			if (!roundable)
 			{
-				if (index >= scale.size() || index < 0)
+				if (index >= (int)scale.size() || index < 0)
 					throw std::out_of_range("ScaleMap::UpPitch() : index out of range.");
 			}
 			else
 			{
-				if (index >= scale.size())
+				if (index >= (int)scale.size())
 					index = scale.size() - 1;
 				else if (index < 0)
 					index = 0;
