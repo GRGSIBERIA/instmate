@@ -63,7 +63,7 @@ namespace instmt
 		* @param lhs 代入先のインスタンス
 		* @param rhs 代入したいインスタンス
 		*/
-		static void Substitute(Pitch& lhs, const Pitch& rhs) 
+		inline static void Substitute(Pitch& lhs, const Pitch& rhs) 
 		{
 			lhs.frequency = rhs.frequency;
 			lhs.midiNoteNumber = rhs.midiNoteNumber;
@@ -75,9 +75,9 @@ namespace instmt
 		* 二つのPitchを比較する
 		* @param lhs 左辺
 		* @param rhs 右辺
-		* @return 右辺が大きい場合は1，左辺が大きい場合は-1，一致した場合は0を返す
+		* @return lhs < rhs = 1; lhs > rhs = -1; lhs == rhs = 0;
 		*/
-		static const int Compare(const Pitch& lhs, const Pitch& rhs)
+		inline static const int Compare(const Pitch& lhs, const Pitch& rhs)
 		{
 			if (lhs.midiNoteNumber < rhs.midiNoteNumber)
 				return 1;
@@ -86,9 +86,35 @@ namespace instmt
 			return 0;
 		}
 
-		const RelativeDistance GetRelativeDistance(const Pitch& dist) const
+		inline static const RelativeDistance GetRelativeDistance(const Pitch& lhs, const Pitch& rhs)
 		{
-			
+			int up = 0;
+			int low = 0;
+			int comp = Compare(lhs, rhs);
+
+			if (comp == 1)
+			{
+				up = rhs.pitchName - lhs.pitchName;
+				low = lhs.pitchName + 12 - rhs.pitchName;
+			}
+			else if (comp == -1)
+			{
+				up = lhs.pitchName - rhs.pitchName;
+				low = rhs.pitchName + 12 - lhs.pitchName;
+			}
+
+			return RelativeDistance(up, low);
+		}
+
+		/**
+		* 二つのピッチの絶対的な距離を返す
+		* @param lhs 左辺
+		* @param rhs 右辺
+		* @return プラスの場合，lhsの方が高音
+		*/
+		inline static const int GetAbsoluteDistance(const Pitch& lhs, const Pitch& rhs)
+		{
+			return (int)lhs.midiNoteNumber - (int)rhs.midiNoteNumber;
 		}
 	};
 
