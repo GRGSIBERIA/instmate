@@ -1,4 +1,4 @@
-#include "stdafx.h"
+﻿#include "stdafx.h"
 #include "CppUnitTest.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
@@ -38,7 +38,7 @@ namespace instmatetest
 			CheckExtension(map, Major7th(), instmt::B);
 		}
 
-		TEST_METHOD(TestToPitch)
+		TEST_METHOD(TestToPitch)	// CheckExtensionでもToPitchしたので細かい動作はある程度保証
 		{
 			instmt::PitchMap map;
 			CheckToPitchForOctave(map, Major3rd(), 4);
