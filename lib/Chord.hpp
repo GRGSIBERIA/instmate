@@ -90,7 +90,7 @@ namespace instmt
 		{
 		public:
 			Major3rd()
-				: ExtensionBase(4, ExtensionType::Third) {}
+				: ExtensionBase(4, ExtensionType::Third, "") {}
 		};
 
 		/**
@@ -100,7 +100,7 @@ namespace instmt
 		{
 		public:
 			Minor3rd()
-				: ExtensionBase(3, ExtensionType::Third) {}
+				: ExtensionBase(3, ExtensionType::Third, "m") {}
 		};
 
 		/**
@@ -110,7 +110,7 @@ namespace instmt
 		{
 		public:
 			Sus2()
-				: ExtensionBase(2, ExtensionType::Third) {}
+				: ExtensionBase(2, ExtensionType::Third, "sus2") {}
 		};
 
 		/**
@@ -120,7 +120,7 @@ namespace instmt
 		{
 		public:
 			Sus4()
-				: ExtensionBase(5, ExtensionType::Third) {}
+				: ExtensionBase(5, ExtensionType::Third, "sus4") {}
 		};
 
 		/**
@@ -130,7 +130,7 @@ namespace instmt
 		{
 		public:
 			Major7th()
-				: ExtensionBase(11, ExtensionType::Seventh) {}
+				: ExtensionBase(11, ExtensionType::Seventh, "M7") {}
 		};
 
 		/**
@@ -140,7 +140,7 @@ namespace instmt
 		{
 		public:
 			Minor7th()
-				: ExtensionBase(10, ExtensionType::Seventh) {}
+				: ExtensionBase(10, ExtensionType::Seventh, "7") {}
 		};
 
 		/**
@@ -150,7 +150,7 @@ namespace instmt
 		{
 		public:
 			Add6th()
-				: ExtensionBase(9, ExtensionType::Seventh) {}
+				: ExtensionBase(9, ExtensionType::Seventh, "6") {}
 		};
 
 		/**
@@ -160,7 +160,7 @@ namespace instmt
 		{
 		public:
 			Flat5th()
-				: ExtensionBase(6, ExtensionType::Fifth) {}
+				: ExtensionBase(6, ExtensionType::Fifth, "(-5)") {}
 		};
 
 		/**
@@ -170,7 +170,7 @@ namespace instmt
 		{
 		public:
 			Perfect5th()
-				: ExtensionBase(7, ExtensionType::Fifth) {}
+				: ExtensionBase(7, ExtensionType::Fifth, "") {}
 		};
 
 		/**
@@ -180,7 +180,7 @@ namespace instmt
 		{
 		public:
 			Sharp5th()
-				: ExtensionBase(8, ExtensionType::Fifth) {}
+				: ExtensionBase(8, ExtensionType::Fifth, "(+5)") {}
 		};
 
 		/**
@@ -190,7 +190,7 @@ namespace instmt
 		{
 		public:
 			Add2()
-				: ExtensionBase(2, ExtensionType::Tension) {}
+				: ExtensionBase(2, ExtensionType::Tension, "add2") {}
 		};
 
 		/**
@@ -200,7 +200,7 @@ namespace instmt
 		{
 		public:
 			Add4()
-				: ExtensionBase(5, ExtensionType::Tension) {}
+				: ExtensionBase(5, ExtensionType::Tension, "add4") {}
 		};
 
 		/**
@@ -210,7 +210,7 @@ namespace instmt
 		{
 		public:
 			Add9th()
-				: ExtensionBase(2 + 12, ExtensionType::Tension) {}
+				: ExtensionBase(2 + 12, ExtensionType::Tension, "+9") {}
 		};
 
 		/**
@@ -220,7 +220,7 @@ namespace instmt
 		{
 		public:
 			AddFlat9th()
-				: ExtensionBase(1 + 12, ExtensionType::Tension) {}
+				: ExtensionBase(1 + 12, ExtensionType::Tension, "+b9") {}
 		};
 
 		/**
@@ -230,7 +230,7 @@ namespace instmt
 		{
 		public:
 			AddSharp9th()
-				: ExtensionBase(3 + 12, ExtensionType::Tension) {}
+				: ExtensionBase(3 + 12, ExtensionType::Tension, "+#9") {}
 		};
 
 		/**
@@ -240,7 +240,7 @@ namespace instmt
 		{
 		public:
 			Add11th()
-				: ExtensionBase(6 + 12, ExtensionType::Tension) {}
+				: ExtensionBase(6 + 12, ExtensionType::Tension, "+11") {}
 		};
 
 		/**
@@ -250,7 +250,7 @@ namespace instmt
 		{
 		public:
 			AddSharp11th()
-				: ExtensionBase(7 + 12, ExtensionType::Tension) {}
+				: ExtensionBase(7 + 12, ExtensionType::Tension, "+#11") {}
 		};
 
 		/**
@@ -260,7 +260,7 @@ namespace instmt
 		{
 		public:
 			Add13th()
-				: ExtensionBase(10 + 12, ExtensionType::Tension) {}
+				: ExtensionBase(10 + 12, ExtensionType::Tension, "+13") {}
 		};
 
 		/**
@@ -270,7 +270,7 @@ namespace instmt
 		{
 		public:
 			AddFlat13th()
-				: ExtensionBase(9 + 12, ExtensionType::Tension) {}
+				: ExtensionBase(9 + 12, ExtensionType::Tension, "+b13") {}
 		};
 	}
 }
