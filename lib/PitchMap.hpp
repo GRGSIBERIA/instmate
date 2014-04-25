@@ -70,6 +70,13 @@ namespace instmt
 			lhs.octave = rhs.octave;
 			lhs.pitchName = rhs.pitchName;
 		}
+
+		
+
+		const Distance Distance(const Pitch& dist) const
+		{
+			
+		}
 	};
 
 
