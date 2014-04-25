@@ -71,7 +71,20 @@ namespace instmt
 			lhs.pitchName = rhs.pitchName;
 		}
 
-		
+		/**
+		* 二つのPitchを比較する
+		* @param lhs 左辺
+		* @param rhs 右辺
+		* @return 右辺が大きい場合は1，左辺が大きい場合は-1，一致した場合は0を返す
+		*/
+		static const int Compare(const Pitch& lhs, const Pitch& rhs)
+		{
+			if (lhs.midiNoteNumber < rhs.midiNoteNumber)
+				return 1;
+			else if (lhs.midiNoteNumber > rhs.midiNoteNumber)
+				return -1;
+			return 0;
+		}
 
 		const Distance Distance(const Pitch& dist) const
 		{
