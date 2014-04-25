@@ -1,4 +1,5 @@
 ﻿#pragma once
+#include <set>
 #include "PitchMap.hpp"
 
 namespace instmt
@@ -24,10 +25,11 @@ namespace instmt
 		protected:
 			unsigned int step;	// 度数, 0 = 1度，1 = 短2度
 			ExtensionType type;
+			string extName;		// コード装飾の実名
 
 		public:
-			ExtensionBase(const unsigned int step, ExtensionType type)
-				: step(step), type(type) {}
+			ExtensionBase(const unsigned int step, const ExtensionType type, const string& extName)
+				: step(step), type(type), extName(extName) {}
 
 			/**
 			* 度数(step)からPitchに変換する
@@ -72,12 +74,12 @@ namespace instmt
 			}
 
 			/**
-			* pitchesの中身を正規化する
-			* @note 不協和音の入っていない状態に直す
+			* pitchesから重複を除いた状態にする
 			*/
-			inline const bool Normalize()
+			inline const void Normalize()
 			{
-
+				set<Pitch> s(pitches.begin(), pitches.end());
+				pitches = vector<Pitch>(s.begin(), s.end());
 			}
 		};
 
