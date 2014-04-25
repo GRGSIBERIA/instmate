@@ -5,14 +5,19 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace instmatetest
 {
-	TEST_CLASS(ChordTest)
+	TEST_CLASS(ExtensionTest)
 	{
 	private:
 		
 	public:
-		TEST_METHOD(TestGetPitch)
+		TEST_METHOD(CheckExtension)
 		{
 			instmt::PitchMap map;
+		}
+
+		TEST_METHOD(TestToPitch)
+		{
+
 		}
 	};
 }
