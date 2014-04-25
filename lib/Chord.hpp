@@ -4,7 +4,7 @@
 
 namespace instmt
 {
-	namespace ext
+	namespace chord
 	{
 		/**
 		* 和音の構成音の種類
@@ -90,8 +90,8 @@ namespace instmt
 			*/
 			inline const void Normalize()
 			{
-				set<Pitch> s(pitches.begin(), pitches.end());
-				pitches = vector<Pitch>(s.begin(), s.end());
+				//set<Pitch> s(pitches.begin(), pitches.end());
+				//pitches = vector<Pitch>(s.begin(), s.end());
 			}
 		};
 
@@ -252,7 +252,7 @@ namespace instmt
 		{
 		public:
 			Add11th()
-				: ExtensionBase(6 + 12, ExtensionType::Tension, "+11") {}
+				: ExtensionBase(5 + 12, ExtensionType::Tension, "+11") {}
 		};
 
 		/**
@@ -262,7 +262,7 @@ namespace instmt
 		{
 		public:
 			AddSharp11th()
-				: ExtensionBase(7 + 12, ExtensionType::Tension, "+#11") {}
+				: ExtensionBase(6 + 12, ExtensionType::Tension, "+#11") {}
 		};
 
 		/**
@@ -272,7 +272,7 @@ namespace instmt
 		{
 		public:
 			Add13th()
-				: ExtensionBase(10 + 12, ExtensionType::Tension, "+13") {}
+				: ExtensionBase(9 + 12, ExtensionType::Tension, "+13") {}
 		};
 
 		/**
@@ -282,7 +282,7 @@ namespace instmt
 		{
 		public:
 			AddFlat13th()
-				: ExtensionBase(9 + 12, ExtensionType::Tension, "+b13") {}
+				: ExtensionBase(8 + 12, ExtensionType::Tension, "+b13") {}
 		};
 	}
 }
