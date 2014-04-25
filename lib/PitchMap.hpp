@@ -28,13 +28,13 @@ namespace instmt
 	/**
 	* PitchとPitchの上昇と下降の距離を表すクラス
 	*/
-	class Distance
+	class RelativeDistance
 	{
 	public:
 		int upper;	// 上昇の距離
 		int lower;	// 下降の距離
 
-		Distance(int upper, int lower)
+		RelativeDistance(int upper, int lower)
 			: upper(upper), lower(lower) {}
 	};
 
@@ -86,7 +86,7 @@ namespace instmt
 			return 0;
 		}
 
-		const Distance Distance(const Pitch& dist) const
+		const RelativeDistance GetRelativeDistance(const Pitch& dist) const
 		{
 			
 		}
