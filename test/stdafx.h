@@ -13,3 +13,4 @@
 // TODO: プログラムに必要な追加ヘッダーをここで参照してください。
 #include "PitchMap.hpp"
 #include "Tuning.hpp"
+#include "Chord.hpp"
