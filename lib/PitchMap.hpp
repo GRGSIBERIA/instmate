@@ -25,6 +25,18 @@ namespace instmt
 		B = 11
 	};
 
+	/**
+	* PitchとPitchの上昇と下降の距離を表すクラス
+	*/
+	class Distance
+	{
+	public:
+		int upper;	// 上昇の距離
+		int lower;	// 下降の距離
+
+		Distance(int upper, int lower)
+			: upper(upper), lower(lower) {}
+	};
 
 	/**
 	* 音名とオクターブのペアで管理するクラス
