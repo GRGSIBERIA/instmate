@@ -11,10 +11,10 @@ namespace instmt
 		*/
 		enum ExtensionType
 		{
-			Third,
-			Fifth,
-			Seventh,
-			Tension
+			Third,		// 第三音
+			Fifth,		// 第五音
+			Seventh,	// 第七音
+			Tension		// 装飾音
 		};
 
 		/**
