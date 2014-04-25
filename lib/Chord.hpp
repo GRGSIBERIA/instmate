@@ -33,10 +33,20 @@ namespace instmt
 
 			/**
 			* 度数(step)からPitchに変換する
+			* @return basePitchからstepだけ移動したPitch
 			*/
 			const Pitch& ToPitch(const PitchMap& map, const Pitch& base) const
 			{
 				return map.ChangePitch(base, step);
+			}
+
+			/**
+			* コード装飾の文字
+			* @return コード装飾の文字
+			*/
+			inline const string& ToString() const
+			{
+				return extName;
 			}
 		};
 
@@ -65,12 +75,14 @@ namespace instmt
 			* 構成音を追加する
 			* @param map ピッチの表
 			* @param ext 追加したいExtension
+			* @return Pitchに変換されたext
 			*/
-			inline const Pitch AddExtension(const PitchMap& map, const ExtensionBase& ext)
+			inline const Pitch& AddExtension(const PitchMap& map, const ExtensionBase& ext)
 			{
 				auto pitch = ext.ToPitch(map, basePitch);
 				auto index = lower_bound(pitches.begin(), pitches.end(), pitch, [](const Pitch& lhs, const Pitch& rhs) -> bool { return lhs.pitchName < rhs.pitchName; });
 				pitches.insert(index, pitch);
+				return *index;
 			}
 
 			/**
