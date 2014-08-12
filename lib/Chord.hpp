@@ -71,6 +71,8 @@ namespace instmt
 				}
 			}
 
+			virtual ~Chord() {}
+
 			/**
 			* 構成音を追加する
 			* @param map ピッチの表

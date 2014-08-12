@@ -34,6 +34,12 @@ namespace instmatetest
 		}
 	public:
 		
+		TEST_METHOD(TestGetInstance)
+		{
+			auto inst = instmt::PitchMapFactory::GetInstance();
+			auto pitch = inst[0];
+		}
+
 		TEST_METHOD(TestMidiNoteNumber)
 		{
 			// TODO: テスト コードをここに挿入します

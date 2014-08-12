@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <algorithm>
+#include <memory>
 using namespace std;
 
 namespace instmt
@@ -28,13 +29,13 @@ namespace instmt
 	/**
 	* PitchとPitchの上昇と下降の距離を表すクラス
 	*/
-	class RelativeDistance
+	class Distance
 	{
 	public:
 		int upper;	// 上昇の距離
 		int lower;	// 下降の距離
 
-		RelativeDistance(int upper, int lower)
+		Distance(int upper, int lower)
 			: upper(upper), lower(lower) {}
 	};
 
@@ -86,7 +87,13 @@ namespace instmt
 			return 0;
 		}
 
-		inline static const RelativeDistance GetRelativeDistance(const Pitch& lhs, const Pitch& rhs)
+		/**
+		* 音名から見た二つのピッチの相対的な距離を返す
+		* @param lhs 左辺
+		* @param rhs 右辺
+		* @return 二つのピッチの相対的な上昇と下降の距離
+		*/
+		inline static const Distance RelativeDistance(const Pitch& lhs, const Pitch& rhs)
 		{
 			int up = 0;
 			int low = 0;
@@ -103,7 +110,7 @@ namespace instmt
 				low = rhs.pitchName + 12 - lhs.pitchName;
 			}
 
-			return RelativeDistance(up, low);
+			return Distance(up, low);
 		}
 
 		/**
@@ -112,12 +119,13 @@ namespace instmt
 		* @param rhs 右辺
 		* @return プラスの場合，lhsの方が高音
 		*/
-		inline static const int GetAbsoluteDistance(const Pitch& lhs, const Pitch& rhs)
+		inline static const int AbsoluteDistance(const Pitch& lhs, const Pitch& rhs)
 		{
 			return (int)lhs.midiNoteNumber - (int)rhs.midiNoteNumber;
 		}
 	};
 
+	class PitchMap;
 
 	/**
 	* スケール表記の地図クラス
@@ -127,7 +135,7 @@ namespace instmt
 	private:
 		vector<Pitch> scale;				// スケール
 		unsigned int maxScientificPitch;	// 国際的ピッチ表記の最大値
-		unsigned int minMidiNoteNumber;
+		unsigned int minMidiNoteNumber;		// MIDIノートナンバーの最小値
 
 	public:
 		/**
@@ -349,6 +357,20 @@ namespace instmt
 					index = 0;
 			}
 			return scale[index];
+		}
+	};
+
+	class PitchMapFactory
+	{
+	private:
+		static PitchMap* map;
+
+	public:
+		static const PitchMap& GetInstance()
+		{
+			if (map == nullptr)
+				map = new PitchMap();
+			return *map;
 		}
 	};
 }
