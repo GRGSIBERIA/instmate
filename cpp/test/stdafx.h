@@ -11,4 +11,6 @@
 #include "CppUnitTest.h"
 
 // TODO: プログラムに必要な追加ヘッダーをここで参照してください。
-#include "ScaleMap.hpp"
+#include "PitchMap.hpp"
+#include "Tuning.hpp"
+#include "Chord.hpp"
