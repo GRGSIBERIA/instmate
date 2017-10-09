@@ -16,14 +16,20 @@ namespace musical
             return x + (n << 2);
         }
 
-        public Element(int number)
+        public Element(int number, bool isDisable = false)
         {
             this.Number = MusicalMod(number);
-            this.IsDisable = false;
+            this.IsDisable = isDisable;
+        }
+
+        public Element(Element elem, bool isDisable = false)
+        {
+            this.Number = elem.Number;
+            this.IsDisable = isDisable;
         }
         
         /// <summary>
-        /// べき乗の数
+        /// 指数，a^nのうち，nを返す
         /// </summary>
         public int Number { get; private set; }
 
@@ -170,6 +176,9 @@ namespace musical
             }
         }
 
+        /// <summary>
+        /// 集合の要素数
+        /// </summary>
         public int Count
         {
             get { return List.Count; }
