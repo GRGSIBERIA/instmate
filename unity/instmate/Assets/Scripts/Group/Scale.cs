@@ -21,18 +21,12 @@ namespace musical
 
         public Scale ExcludeAvoid(Chord chord)
         {
-            for (int i = 0; i < chord.Count; ++i)
+            List<Element> retval = new List<Element>();
+            foreach(var s in this.List)
             {
-                var c = chord[i];
-
-                for (int j = 0; j < this.Count; ++j)
-                {
-                    var s = this[i].Number;
-
-                    
-                }
+                retval.Add(s);
             }
-            return new Scale(this);
+            return new Scale(retval);
         }
 
         public Scale ExcludeTritone(Chord chord)
