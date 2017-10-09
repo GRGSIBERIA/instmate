@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 群の要素，群の元
+/// 巡回群の元，位数12で固定
 /// </summary>
 public struct Element
 {
     private int number;
-    private int ceil;
 
     private static int MusicalMod(int x)
     {
@@ -20,10 +19,9 @@ public struct Element
         return x + (n << 2);
     }
 
-    public Element(int number, int ceil)
+    public Element(int number)
     {
         this.number = MusicalMod(number);
-        this.ceil = ceil;
     }
 
     /// <summary>
@@ -36,88 +34,92 @@ public struct Element
             return number;
         }
     }
+    
 
     /// <summary>
-    /// 位数
-    /// </summary>
-    public int Ceil
-    {
-        get
-        {
-            return ceil;
-        }
-    }
-
-    /// <summary>
-    /// 元となる
+    /// 巡回群の元となる要素同士の積
     /// </summary>
     /// <param name="l"></param>
     /// <param name="r"></param>
-    /// <returns></returns>
+    /// <returns>a^n * a^m = a^(n+m)</returns>
     public static Element operator* (Element l, Element r)
     {
-        if (l.Ceil != r.Ceil)
-            throw new System.Exception("Not equal a ceil of an element");
-        return new Element(l.Number + r.Number, l.Ceil);
+        return new Element(l.Number + r.Number);
     }
 }
 
 /// <summary>
-/// 巡回群
+/// 巡回群の元を取る集合
 /// </summary>
-public class CyclicGroup
+public class Group
 {
-    public CyclicGroup(List<int> list, int ceil)
+    /// <summary>
+    /// 巡回群の元を取る集合
+    /// </summary>
+    /// <param name="list">初期化リスト</param>
+    public Group(List<int> list)
     {
-        this.Ceil = ceil;
         this.List = new List<Element>(list.Count);
         for (int i = 0; i < list.Count; ++i)
         {
-            this.List[i] = new Element(list[i], ceil);
+            this.List[i] = new Element(list[i]);
         }
     }
 
-    public CyclicGroup(List<Element> list, int ceil)
+    /// <summary>
+    /// 巡回群の元を取る集合
+    /// </summary>
+    /// <param name="list">初期化リスト</param>
+    public Group(List<Element> list)
     {
-        this.Ceil = ceil;
         this.List = new List<Element>(list);
     }
 
-    private static CyclicGroup MultipleGroup(Element elem, CyclicGroup group)
+    /// <summary>
+    /// 巡回群の元を取る集合
+    /// </summary>
+    /// <param name="g">コピー元の巡回群</param>
+    public Group(Group g)
+    {
+        this.List = new List<Element>(g.List);
+    }
+
+    private static Group MultipleGroup(Element elem, Group group)
     {
         List<Element> retval = new List<Element>(group.List.Count);
         for (int i = 0; i < group.List.Count; ++i)
         {
             retval[i] = elem * group.List[i];
         }
-        return new CyclicGroup(retval, group.Ceil);
+        return new Group(retval);
     }
 
-    public static CyclicGroup operator *(Element elem, CyclicGroup group)
+    /// <summary>
+    /// 巡回群の元となる要素と集合の積
+    /// </summary>
+    /// <param name="elem"></param>
+    /// <param name="group"></param>
+    /// <returns>元となる要素と群の積の結果</returns>
+    public static Group operator *(Element elem, Group group)
     {
         return MultipleGroup(elem, group);
     }
 
-    public static CyclicGroup operator *(CyclicGroup group, Element elem)
+    /// <summary>
+    /// 巡回群の元となる要素と集合の積
+    /// </summary>
+    /// <param name="elem"></param>
+    /// <param name="group"></param>
+    /// <returns>元となる要素と群の積の結果</returns>
+    public static Group operator *(Group group, Element elem)
     {
         return MultipleGroup(elem, group);
     }
     
-
-    protected int Ceil
-    {
-        get
-        {
-            return Ceil;
-        }
-
-        private set
-        {
-            Ceil = value;
-        }
-    }
-
-    protected List<Element> List
+    /// <summary>
+    /// 集合のリスト
+    /// </summary>
+    public List<Element> List
     {
         get
         {
