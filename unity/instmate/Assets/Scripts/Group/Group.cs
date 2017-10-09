@@ -26,7 +26,7 @@ namespace musical
         {
             this.number = MusicalMod(number);
         }
-
+        
         /// <summary>
         /// べき乗の数
         /// </summary>
@@ -71,12 +71,22 @@ namespace musical
         {
             return new Element(l + r.Number);
         }
+
+        public static bool operator ==(Element l, Element r)
+        {
+            return l.number == r.number;
+        }
+
+        public static bool operator !=(Element l, Element r)
+        {
+            return l.number != r.number;
+        }
     }
 
     /// <summary>
     /// 巡回群の元を取る集合
     /// </summary>
-    public class Group : IEnumerable<Element>
+    public class Group 
     {
         /// <summary>
         /// 巡回群の元を取る集合
@@ -175,16 +185,6 @@ namespace musical
             {
                 List = value;
             }
-        }
-        
-        public IEnumerator GetEnumerator()
-        {
-            return ((IEnumerable<Element>)List).GetEnumerator();
-        }
-
-        IEnumerator<Element> IEnumerable<Element>.GetEnumerator()
-        {
-            return ((IEnumerable<Element>)List).GetEnumerator();
         }
     }
 }
