@@ -19,20 +19,15 @@ namespace musical
         {
         }
 
-        /// <summary>
-        /// アボイドノートを除外したスケールを生成
-        /// </summary>
-        /// <param name="chord"></param>
-        /// <returns></returns>
-        public Scale ExcludeAvoid(Chord chord)
+        private List<Element> ExcludeNote(Chord chord, int addNoteNum)
         {
             List<Element> retval = new List<Element>();
-            foreach(var s in this.List)
+            foreach (var s in this.List)
             {
                 bool skipflag = false;
                 foreach (var c in chord.List)
                 {
-                    var news = s * 1;
+                    var news = s * addNoteNum;
                     if (news == c)
                     {
                         skipflag = true;
@@ -42,17 +37,29 @@ namespace musical
                 if (!skipflag)
                     retval.Add(s);
             }
-            return new Scale(retval);
+            return retval;
+        }
+
+        /// <summary>
+        /// アボイドノートを除外したスケールを生成
+        /// </summary>
+        /// <param name="chord"></param>
+        /// <returns></returns>
+        public Scale ExcludeAvoid(Chord chord)
+        {
+            return new Scale(ExcludeNote(chord, 1));
         }
 
         public Scale ExcludeTritone(Chord chord)
         {
-            return new Scale(this);
+            return new Scale(ExcludeNote(chord, 6));
         }
     }
 
     public class Chord : Group
     {
+        public string Name { get; private set; }
+
         public Chord(List<int> list) : base(list)
         {
         }
