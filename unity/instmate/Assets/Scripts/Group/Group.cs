@@ -4,10 +4,6 @@ using UnityEngine;
 
 namespace musical
 {
-
-    /// <summary>
-    /// 巡回群の元，位数12で固定
-    /// </summary>
     public struct Element
     {
         private int number;
@@ -80,6 +76,16 @@ namespace musical
         public static bool operator !=(Element l, Element r)
         {
             return l.number != r.number;
+        }
+
+        public override bool Equals(object obj)
+        {
+            return base.Equals(obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
         }
     }
 
