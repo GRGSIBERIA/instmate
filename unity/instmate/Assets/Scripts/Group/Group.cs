@@ -180,17 +180,6 @@ namespace musical
         /// <summary>
         /// 集合のリスト
         /// </summary>
-        public List<Element> List
-        {
-            get
-            {
-                return List;
-            }
-
-            private set
-            {
-                List = value;
-            }
-        }
+        public List<Element> List { get; private set; }
     }
 }
