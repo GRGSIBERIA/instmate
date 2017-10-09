@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
+/// <summary>
+/// 群の要素，群の元
+/// </summary>
 public struct Element
 {
     private int number;
@@ -24,6 +26,9 @@ public struct Element
         this.ceil = ceil;
     }
 
+    /// <summary>
+    /// べき乗の数
+    /// </summary>
     public int Number
     {
         get
@@ -32,6 +37,9 @@ public struct Element
         }
     }
 
+    /// <summary>
+    /// 位数
+    /// </summary>
     public int Ceil
     {
         get
@@ -40,6 +48,12 @@ public struct Element
         }
     }
 
+    /// <summary>
+    /// 元となる
+    /// </summary>
+    /// <param name="l"></param>
+    /// <param name="r"></param>
+    /// <returns></returns>
     public static Element operator* (Element l, Element r)
     {
         if (l.Ceil != r.Ceil)
@@ -48,14 +62,14 @@ public struct Element
     }
 }
 
-public class Group 
+/// <summary>
+/// 巡回群
+/// </summary>
+public class CyclicGroup
 {
-    private List<Element> list;
-    private int ceil;
-
-    public Group(List<int> list, int ceil)
+    public CyclicGroup(List<int> list, int ceil)
     {
-        this.ceil = ceil;
+        this.Ceil = ceil;
         this.List = new List<Element>(list.Count);
         for (int i = 0; i < list.Count; ++i)
         {
@@ -63,42 +77,43 @@ public class Group
         }
     }
 
-    public Group(List<Element> list, int ceil)
+    public CyclicGroup(List<Element> list, int ceil)
     {
-        this.ceil = ceil;
-        this.list = new List<Element>(list);
+        this.Ceil = ceil;
+        this.List = new List<Element>(list);
     }
 
-    private static Group MultipleGroup(Element elem, Group group)
+    private static CyclicGroup MultipleGroup(Element elem, CyclicGroup group)
     {
-        List<Element> retval = new List<Element>(group.list.Count);
-        for (int i = 0; i < group.list.Count; ++i)
+        List<Element> retval = new List<Element>(group.List.Count);
+        for (int i = 0; i < group.List.Count; ++i)
         {
-            retval[i] = elem * group.list[i];
+            retval[i] = elem * group.List[i];
         }
-        return new Group(retval, group.ceil);
+        return new CyclicGroup(retval, group.Ceil);
     }
 
-    public static Group operator* (Element elem, Group group)
+    public static CyclicGroup operator *(Element elem, CyclicGroup group)
     {
         return MultipleGroup(elem, group);
     }
 
-    public static Group operator* (Group group, Element elem)
+    public static CyclicGroup operator *(CyclicGroup group, Element elem)
     {
         return MultipleGroup(elem, group);
     }
+    
 
     protected int Ceil
     {
         get
         {
-            return ceil;
+            return Ceil;
         }
 
-        set
+        private set
         {
-            ceil = value;
+            Ceil = value;
         }
     }
 
@@ -106,12 +121,12 @@ public class Group
     {
         get
         {
-            return list;
+            return List;
         }
 
-        set
+        private set
         {
-            list = value;
+            List = value;
         }
     }
 }
