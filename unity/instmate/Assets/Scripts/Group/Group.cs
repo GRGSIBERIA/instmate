@@ -49,12 +49,34 @@ namespace musical
         {
             return new Element(l.Number + r.Number);
         }
+
+        /// <summary>
+        /// 巡回群の元となる要素同士の積
+        /// </summary>
+        /// <param name="l"></param>
+        /// <param name="r"></param>
+        /// <returns>a^n * a^m = a^(n+m)</returns>
+        public static Element operator *(Element l, int r)
+        {
+            return new Element(l.Number + r);
+        }
+
+        /// <summary>
+        /// 巡回群の元となる要素同士の積
+        /// </summary>
+        /// <param name="l"></param>
+        /// <param name="r"></param>
+        /// <returns>a^n * a^m = a^(n+m)</returns>
+        public static Element operator *(int l, Element r)
+        {
+            return new Element(l + r.Number);
+        }
     }
 
     /// <summary>
     /// 巡回群の元を取る集合
     /// </summary>
-    public class Group
+    public class Group : IEnumerable<Element>
     {
         /// <summary>
         /// 巡回群の元を取る集合
@@ -120,6 +142,26 @@ namespace musical
         }
 
         /// <summary>
+        /// インデクサ
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns>Listの要素を返す</returns>
+        public Element this[int index]
+        {
+            get
+            {
+                if (index >= List.Count)
+                    index %= List.Count;
+                return List[index];
+            }
+        }
+
+        public int Count
+        {
+            get { return List.Count; }
+        }
+
+        /// <summary>
         /// 集合のリスト
         /// </summary>
         public List<Element> List
@@ -133,6 +175,16 @@ namespace musical
             {
                 List = value;
             }
+        }
+        
+        public IEnumerator GetEnumerator()
+        {
+            return ((IEnumerable<Element>)List).GetEnumerator();
+        }
+
+        IEnumerator<Element> IEnumerable<Element>.GetEnumerator()
+        {
+            return ((IEnumerable<Element>)List).GetEnumerator();
         }
     }
 }
