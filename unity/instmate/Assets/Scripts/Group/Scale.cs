@@ -18,6 +18,27 @@ namespace musical
         public Scale(List<Element> list) : base(list)
         {
         }
+
+        public Scale ExcludeAvoid(Chord chord)
+        {
+            for (int i = 0; i < chord.Count; ++i)
+            {
+                var c = chord[i];
+
+                for (int j = 0; j < this.Count; ++j)
+                {
+                    var s = this[i].Number;
+
+                    
+                }
+            }
+            return new Scale(this);
+        }
+
+        public Scale ExcludeTritone(Chord chord)
+        {
+            return new Scale(this);
+        }
     }
 
     public class Chord : Group
