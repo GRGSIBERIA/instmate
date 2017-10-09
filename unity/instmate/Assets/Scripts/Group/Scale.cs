@@ -19,12 +19,28 @@ namespace musical
         {
         }
 
+        /// <summary>
+        /// アボイドノートを除外したスケールを生成
+        /// </summary>
+        /// <param name="chord"></param>
+        /// <returns></returns>
         public Scale ExcludeAvoid(Chord chord)
         {
             List<Element> retval = new List<Element>();
             foreach(var s in this.List)
             {
-                retval.Add(s);
+                bool skipflag = false;
+                foreach (var c in chord.List)
+                {
+                    var news = s * 1;
+                    if (news == c)
+                    {
+                        skipflag = true;
+                        break;
+                    }
+                }
+                if (!skipflag)
+                    retval.Add(s);
             }
             return new Scale(retval);
         }
