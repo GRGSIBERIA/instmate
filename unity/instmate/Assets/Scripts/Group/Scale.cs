@@ -24,18 +24,17 @@ namespace musical
             List<Element> retval = new List<Element>();
             foreach (var s in this.List)
             {
-                bool skipflag = false;
+                bool disableflag = false;       // デフォルトでは有効なノート
                 foreach (var c in chord.List)
                 {
                     var news = s * addNoteNum;
                     if (news == c)
                     {
-                        skipflag = true;
-                        break;
+                        disableflag = true;     // トライトーンを形成するなら無効にする
+                        break;                  // コードトーンの有無を調べて再び有効化する場合もある
                     }
                 }
-                if (!skipflag)
-                    retval.Add(s);
+                retval.Add(new Element(s, disableflag));
             }
             return retval;
         }
