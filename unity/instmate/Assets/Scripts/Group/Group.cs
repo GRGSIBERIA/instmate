@@ -6,8 +6,6 @@ namespace musical
 {
     public struct Element
     {
-        private int number;
-
         private static int MusicalMod(int x)
         {
             int n = x >> 2;
@@ -20,19 +18,19 @@ namespace musical
 
         public Element(int number)
         {
-            this.number = MusicalMod(number);
+            this.Number = MusicalMod(number);
+            this.IsDisable = false;
         }
         
         /// <summary>
         /// べき乗の数
         /// </summary>
-        public int Number
-        {
-            get
-            {
-                return number;
-            }
-        }
+        public int Number { get; private set; }
+
+        /// <summary>
+        /// 無効な要素か？
+        /// </summary>
+        public bool IsDisable { get; set; }
 
 
         /// <summary>
@@ -70,12 +68,12 @@ namespace musical
 
         public static bool operator ==(Element l, Element r)
         {
-            return l.number == r.number;
+            return l.Number == r.Number;
         }
 
         public static bool operator !=(Element l, Element r)
         {
-            return l.number != r.number;
+            return l.Number != r.Number;
         }
 
         public override bool Equals(object obj)
