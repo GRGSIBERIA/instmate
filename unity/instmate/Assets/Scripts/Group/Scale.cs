@@ -7,51 +7,70 @@ namespace musical
 {
     public class Scale : Group
     {
-        public Scale(Group g) : base(g)
+        /// <summary>
+        /// スケールが影響を受けているコード
+        /// </summary>
+        public Chord Chord { get; protected set; }
+
+        public Scale(Group g, Chord chord) : base(g)
         {
+            this.Chord = chord;
         }
 
-        public Scale(List<int> list) : base(list)
+        public Scale(List<int> list, Chord chord) : base(list)
         {
+            this.Chord = chord;
         }
 
-        public Scale(List<Element> list) : base(list)
+        public Scale(List<Element> list, Chord chord) : base(list)
         {
+            this.Chord = chord;
         }
 
-        private List<Element> ExcludeNote(Chord chord, int addNoteNum)
+        private enum DisableType
+        {
+            Chord,
+            Avoid,
+            Tritone
+        }
+
+        private List<Element> ExcludeNote(Chord chord, int addNoteNum, DisableType type)
         {
             List<Element> retval = new List<Element>();
             foreach (var s in this.List)
             {
-                bool disableflag = false;       // デフォルトでは有効なノート
+                var elem = new Element(s);
+
                 foreach (var c in chord.List)
                 {
                     var news = s * addNoteNum;
                     if (news == c)
                     {
-                        disableflag = true;     // トライトーンを形成するなら無効にする
-                        break;                  // コードトーンの有無を調べて再び有効化する場合もある
+                        switch (type)
+                        {
+                            case DisableType.Chord:
+                                elem.IsChordTone = true;
+                                break;
+                            case DisableType.Avoid:
+                                elem.IsAvoid = true;
+                                break;
+                            case DisableType.Tritone:
+                                elem.IsTritone = true;
+                                break;
+                        }
+                        break;
                     }
                 }
-                retval.Add(new Element(s, disableflag));
+                retval.Add(elem);
             }
             return retval;
         }
 
-        /// <summary>
-        /// アボイドノートを除外したスケールを生成
-        /// </summary>
-        /// <param name="chord"></param>
-        /// <returns></returns>
-        public Scale ExcludeAvoid(Chord chord)
+        private void InitializeScale(Chord chord)
         {
-            return new Scale(ExcludeNote(chord, 1));
-        }
-
-        public Scale ExcludeTritone(Chord chord)
-        {
-            return new Scale(ExcludeNote(chord, 6));
+            this.List = ExcludeNote(chord, 1, DisableType.Avoid);
+            this.List = ExcludeNote(chord, 6, DisableType.Tritone);
+            this.List = ExcludeNote(chord, 0, DisableType.Chord);
         }
     }
 
