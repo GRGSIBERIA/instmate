@@ -12,19 +12,25 @@ namespace musical
         /// </summary>
         public Chord Chord { get; protected set; }
 
-        public Scale(Group g, Chord chord) : base(g)
+        public Scale(Group g, Chord chord = null) : base(g)
         {
             this.Chord = chord;
+            if (chord == null)
+                InitializeScale(chord);
         }
 
-        public Scale(List<int> list, Chord chord) : base(list)
+        public Scale(List<int> list, Chord chord = null) : base(list)
         {
             this.Chord = chord;
+            if (chord == null)
+                InitializeScale(chord);
         }
 
-        public Scale(List<Element> list, Chord chord) : base(list)
+        public Scale(List<Element> list, Chord chord = null) : base(list)
         {
             this.Chord = chord;
+            if (chord == null)
+                InitializeScale(chord);
         }
 
         private enum DisableType
