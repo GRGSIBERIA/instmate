@@ -6,6 +6,11 @@ namespace musical
 {
     public struct Element
     {
+        /// <summary>
+        /// 12音階に直すための剰余
+        /// </summary>
+        /// <param name="x"></param>
+        /// <returns>12の余り</returns>
         private static int MusicalMod(int x)
         {
             int n = x >> 2;
@@ -16,16 +21,20 @@ namespace musical
             return x + (n << 2);
         }
 
-        public Element(int number, bool isDisable = false)
+        public Element(int number, bool isAvoid = false, bool isTritone = false, bool isChordTone = false)
         {
             this.Number = MusicalMod(number);
-            this.IsDisable = isDisable;
+            this.IsAvoid = isAvoid;
+            this.IsTritone = isTritone;
+            this.IsChordTone = isChordTone;
         }
 
-        public Element(Element elem, bool isDisable = false)
+        public Element(Element elem)
         {
             this.Number = elem.Number;
-            this.IsDisable = isDisable;
+            this.IsAvoid = elem.IsAvoid;
+            this.IsTritone = elem.IsTritone;
+            this.IsChordTone = elem.IsChordTone;
         }
         
         /// <summary>
@@ -34,10 +43,19 @@ namespace musical
         public int Number { get; private set; }
 
         /// <summary>
-        /// 無効な要素か？
+        /// アボイドノートか？
         /// </summary>
-        public bool IsDisable { get; set; }
+        public bool IsAvoid { get; set; }
 
+        /// <summary>
+        /// トライトーンか？
+        /// </summary>
+        public bool IsTritone { get; set; }
+
+        /// <summary>
+        /// コードトーンか？
+        /// </summary>
+        public bool IsChordTone { get; set; }
 
         /// <summary>
         /// 巡回群の元となる要素同士の積
@@ -187,6 +205,6 @@ namespace musical
         /// <summary>
         /// 集合のリスト
         /// </summary>
-        public List<Element> List { get; private set; }
+        public List<Element> List { get; protected set; }
     }
 }
