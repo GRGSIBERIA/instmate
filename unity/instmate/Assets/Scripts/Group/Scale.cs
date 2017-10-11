@@ -114,6 +114,39 @@ namespace musical
         {
             this.Name = chord.Name;
         }
+
+        private static string DetectChordName(List<int> list)
+        {
+            string name = "";
+            
+            return name;
+        }
+
+        private static List<int> DetectChordList(string name)
+        {
+            List<int> retval = new List<int>();
+
+            for (int i = 0; i < name.Length; ++i)
+            {
+                var c = name[i];
+
+                // 非コード音を飛ばす
+                if (i <= 0)
+                {
+                    retval.Add(0);
+                    continue;
+                }
+                else if (i == 1)
+                {
+                    if (c == 'b' || c == '#' || c == '♭')
+                        continue;
+                }
+
+                // コードトーンを探す
+            }
+
+            return retval;
+        }
     }
 
 }
