@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-namespace musical
+namespace Musical
 {
     /// <summary>
     /// スケールを生成する
@@ -88,65 +88,6 @@ namespace musical
         }
     }
 
-    /// <summary>
-    /// 和音を表すクラス
-    /// </summary>
-    public class Chord : Group
-    {
-        public string Name { get; private set; }
-
-        public Chord(List<int> list, string name) : base(list)
-        {
-            this.Name = name;
-        }
-
-        public Chord(List<Element> list, string name) : base(list)
-        {
-            this.Name = name;
-        }
-
-        public Chord(Group g, string name) : base(g)
-        {
-            this.Name = name;
-        }
-
-        public Chord(Chord chord) : base(chord)
-        {
-            this.Name = chord.Name;
-        }
-
-        private static string DetectChordName(List<int> list)
-        {
-            string name = "";
-            
-            return name;
-        }
-
-        private static List<int> DetectChordList(string name)
-        {
-            List<int> retval = new List<int>();
-
-            for (int i = 0; i < name.Length; ++i)
-            {
-                var c = name[i];
-
-                // 非コード音を飛ばす
-                if (i <= 0)
-                {
-                    retval.Add(0);
-                    continue;
-                }
-                else if (i == 1)
-                {
-                    if (c == 'b' || c == '#' || c == '♭')
-                        continue;
-                }
-
-                // コードトーンを探す
-            }
-
-            return retval;
-        }
-    }
+    
 
 }
