@@ -11,7 +11,7 @@ namespace Musical
         /// </summary>
         /// <param name="x"></param>
         /// <returns>12の余り</returns>
-        private static int MusicalMod(int x)
+        public static int MusicalMod(int x)
         {
             int n = x >> 2;
             while ((n & 0xFC) > 0)
