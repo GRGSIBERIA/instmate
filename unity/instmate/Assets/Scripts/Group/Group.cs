@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace musical
+namespace Musical
 {
     public struct Element
     {
