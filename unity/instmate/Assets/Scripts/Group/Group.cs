@@ -13,6 +13,8 @@ namespace Musical
         /// <returns>12の余り</returns>
         public static int MusicalMod(int x)
         {
+            if (x < 12) return x;
+
             int n = x >> 2;
             while ((n & 0xFC) > 0)
                 n = (n >> 2) + (n & 3);
