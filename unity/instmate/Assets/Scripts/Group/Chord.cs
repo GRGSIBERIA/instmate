@@ -27,6 +27,16 @@ namespace Musical
         public ToneType Type { get; private set; }      // トーンの種類
         public int ToneID { get; private set; }         // 音階上のID
         public string Name { get; private set; }        // 構成音の名前
+        
+        /// <summary>
+        /// 音階番号から構成音を取得する
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public static Tone GetTone(int id)
+        {
+            return tones[Element.MusicalMod(id)];
+        }
 
         /// <summary>
         /// 構成音の配列
@@ -46,13 +56,25 @@ namespace Musical
             new Tone(ToneType.Seventh, 11, "M7"),
         });
         
-        public Tone(ToneType type = ToneType.None, int toneId = 0, string name = "")
+
+        /// <summary>
+        /// 非公開コンストラクタ
+        /// tonesの初期化のみに使用する
+        /// </summary>
+        /// <param name="type">構成音の種類</param>
+        /// <param name="toneId">音階番号</param>
+        /// <param name="name">表示名</param>
+        private Tone(ToneType type = ToneType.None, int toneId = 0, string name = "")
         {
             this.Type = type;
             this.ToneID = toneId;
             this.Name = name;
         }
         
+        /// <summary>
+        /// コピーコンストラクタ
+        /// </summary>
+        /// <param name="t">コピー元</param>
         public Tone(Tone t)
         {
             this.Type = t.Type;
@@ -66,7 +88,7 @@ namespace Musical
         /// <param name="toneId">音階番号，自動的に12未満にまとまる</param>
         public Tone(int toneId)
         {
-            var t = tones[Element.MusicalMod(toneId)];
+            var t = GetTone(toneId);
             this.Type = t.Type;
             this.ToneID = t.ToneID;
             this.Name = t.Name;
@@ -84,24 +106,43 @@ namespace Musical
         public Tone Seventh { get; private set; }
         public Tone OnChord { get; private set; }
 
-        private void InitializeTones()
+        /// <summary>
+        /// 音階番号から構成音を初期化する関数
+        /// </summary>
+        /// <param name="id">音階番号</param>
+        private void InitializeTones(int id)
         {
-
+            var t = Tone.GetTone(id);
+            switch (t.Type)
+            {
+                case ToneType.Third:
+                    this.Third = t;
+                    break;
+                case ToneType.Fifth:
+                    this.Fifth = t;
+                    break;
+                case ToneType.Seventh:
+                    this.Seventh = t;
+                    break;
+                case ToneType.OnChord:
+                    this.OnChord = t;
+                    break;
+            }
         }
 
-        public Chord(List<int> list, string name) : base(list)
+        public Chord(List<int> list) : base(list)
         {
-            this.Name = name;
+            
         }
 
-        public Chord(List<Element> list, string name) : base(list)
+        public Chord(List<Element> list) : base(list)
         {
-            this.Name = name;
+            
         }
 
-        public Chord(Group g, string name) : base(g)
+        public Chord(Group g) : base(g)
         {
-            this.Name = name;
+            
         }
 
         public Chord(Chord chord) : base(chord)
@@ -109,12 +150,10 @@ namespace Musical
             this.Name = chord.Name;
         }
 
-        private static string DetectChordName(List<int> list)
+        private string DetectChordName(List<int> list)
         {
             string name = "";
-
-
-
+            
             return name;
         }
 
