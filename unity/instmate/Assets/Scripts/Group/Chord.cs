@@ -132,22 +132,29 @@ namespace Musical
 
         public Chord(List<int> list) : base(list)
         {
-            
+            foreach (var l in list)
+                InitializeTones(l);
         }
 
         public Chord(List<Element> list) : base(list)
         {
-            
+            foreach (var l in list)
+                InitializeTones(l.Number);
         }
 
         public Chord(Group g) : base(g)
         {
-            
+            foreach (var l in g.List)
+                InitializeTones(l.Number);
         }
 
         public Chord(Chord chord) : base(chord)
         {
             this.Name = chord.Name;
+            this.Third = chord.Third;
+            this.Fifth = chord.Fifth;
+            this.Seventh = chord.Seventh;
+            this.OnChord = chord.OnChord;
         }
 
         private string DetectChordName(List<int> list)
