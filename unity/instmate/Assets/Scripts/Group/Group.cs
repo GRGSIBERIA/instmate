@@ -143,6 +143,14 @@ namespace Musical
         /// <summary>
         /// 巡回群の元を取る集合
         /// </summary>
+        public Group()
+        {
+            this.List = new List<Element>();
+        }
+
+        /// <summary>
+        /// 巡回群の元を取る集合
+        /// </summary>
         /// <param name="g">コピー元の巡回群</param>
         public Group(Group g)
         {

@@ -42,7 +42,7 @@ namespace Musical
         /// 構成音の配列
         /// </summary>
         private static readonly ReadOnlyCollection<Tone> tones = Array.AsReadOnly(new Tone[] {
-            new Tone(ToneType.Root, 0, ""),
+            new Tone(ToneType.None, 0, ""),     // ルート音は構成音と言いにくい？
             new Tone(ToneType.None, 1, ""),
             new Tone(ToneType.None, 2, ""),
             new Tone(ToneType.Third, 3, "m"),
@@ -113,6 +113,7 @@ namespace Musical
         private void InitializeTones(int id)
         {
             var t = Tone.GetTone(id);
+            bool isTone = true;     // 構成音判定
             switch (t.Type)
             {
                 case ToneType.Third:
@@ -127,22 +128,27 @@ namespace Musical
                 case ToneType.OnChord:
                     this.OnChord = t;
                     break;
+                default:
+                    isTone = false;
+                    break;
             }
+            if (isTone)     // 構成音として正しい並びだけ認識する
+                this.List.Add(new Element(id));
         }
 
-        public Chord(List<int> list) : base(list)
+        public Chord(List<int> list) : base()
         {
             foreach (var l in list)
                 InitializeTones(l);
         }
 
-        public Chord(List<Element> list) : base(list)
+        public Chord(List<Element> list) : base()
         {
             foreach (var l in list)
                 InitializeTones(l.Number);
         }
 
-        public Chord(Group g) : base(g)
+        public Chord(Group g) : base()
         {
             foreach (var l in g.List)
                 InitializeTones(l.Number);
