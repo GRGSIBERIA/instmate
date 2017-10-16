@@ -136,24 +136,40 @@ namespace Musical
                 this.List.Add(new Element(id));
         }
 
+        /// <summary>
+        /// リストからコードを作成する
+        /// </summary>
+        /// <param name="list"></param>
         public Chord(List<int> list) : base()
         {
             foreach (var l in list)
                 InitializeTones(l);
         }
 
+        /// <summary>
+        /// リストからコードを作成する
+        /// </summary>
+        /// <param name="list"></param>
         public Chord(List<Element> list) : base()
         {
             foreach (var l in list)
                 InitializeTones(l.Number);
         }
 
+        /// <summary>
+        /// リストからコードを作成する
+        /// </summary>
+        /// <param name="list"></param>
         public Chord(Group g) : base()
         {
             foreach (var l in g.List)
                 InitializeTones(l.Number);
         }
 
+        /// <summary>
+        /// コピーコンストラクタ
+        /// </summary>
+        /// <param name="chord"></param>
         public Chord(Chord chord) : base(chord)
         {
             this.Name = chord.Name;
@@ -161,6 +177,70 @@ namespace Musical
             this.Fifth = chord.Fifth;
             this.Seventh = chord.Seventh;
             this.OnChord = chord.OnChord;
+        }
+
+        public Chord(string name) : base()
+        {
+
+        }
+
+        private string NamingThird()
+        {
+            string retval = "";
+            switch (this.Third.ToneID)
+            {
+                case 3:
+                    retval = "m";
+                    break;
+                case 4:
+                    retval = "maj";
+                    break;
+                case 5:
+                    retval = "sus4";
+                    break;
+                default:
+                    break;
+            }
+            return retval;
+        }
+
+        private string NamingFifth()
+        {
+            string retval = "";
+            switch (this.Third.ToneID)
+            {
+                case 6:
+                    retval = "-5";
+                    break;
+                case 7:
+                    break;
+                case 8:
+                    retval = "+5";
+                    break;
+                default:
+                    break;
+            }
+            return retval;
+        }
+
+        private string NamingSeventh()
+        {
+            string retval = "";
+            switch (this.Third.ToneID)
+            {
+                case 9:
+                    retval = "6";
+                    break;
+                case 10:
+                    retval = "7";
+                    break;
+                case 11:
+                    retval = "M7";
+                    break;
+                default:
+                    break;
+            }
+            return retval;
         }
 
         private string DetectChordName(List<int> list)
