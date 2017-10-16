@@ -47,7 +47,7 @@ namespace Musical
             new Tone(ToneType.None, 2, ""),
             new Tone(ToneType.Third, 3, "m"),
             new Tone(ToneType.Third, 4, "maj"),
-            new Tone(ToneType.Fifth, 5, "sus4"),
+            new Tone(ToneType.Third, 5, "sus4"),
             new Tone(ToneType.Fifth, 6, "-5"),
             new Tone(ToneType.Fifth, 7, ""),
             new Tone(ToneType.Fifth, 8, "+5"),
@@ -186,61 +186,17 @@ namespace Musical
 
         private string NamingThird()
         {
-            string retval = "";
-            switch (this.Third.ToneID)
-            {
-                case 3:
-                    retval = "m";
-                    break;
-                case 4:
-                    retval = "maj";
-                    break;
-                case 5:
-                    retval = "sus4";
-                    break;
-                default:
-                    break;
-            }
-            return retval;
+            return this.Third.Name;
         }
 
         private string NamingFifth()
         {
-            string retval = "";
-            switch (this.Third.ToneID)
-            {
-                case 6:
-                    retval = "-5";
-                    break;
-                case 7:
-                    break;
-                case 8:
-                    retval = "+5";
-                    break;
-                default:
-                    break;
-            }
-            return retval;
+            return this.Fifth.Name;
         }
 
         private string NamingSeventh()
         {
-            string retval = "";
-            switch (this.Third.ToneID)
-            {
-                case 9:
-                    retval = "6";
-                    break;
-                case 10:
-                    retval = "7";
-                    break;
-                case 11:
-                    retval = "M7";
-                    break;
-                default:
-                    break;
-            }
-            return retval;
+            return this.Seventh.Name;
         }
 
         private string DetectChordName(List<int> list)
