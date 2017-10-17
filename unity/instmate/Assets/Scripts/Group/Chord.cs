@@ -181,7 +181,7 @@ namespace Musical
 
         public Chord(string name) : base()
         {
-
+            
         }
 
         private string NamingThird()
