@@ -145,6 +145,30 @@ namespace Musical
             this.ToneID = t.ToneID;
             this.Name = t.Name;
         }
+        
+        /// <summary>
+        /// 数値での掛け算, IDだけ遷移させる
+        /// </summary>
+        /// <param name="t"></param>
+        /// <param name="v"></param>
+        /// <returns></returns>
+        public static Tone operator *(Tone t, Element v)
+        {
+            t.ToneID = (t.ToneID * v).Number;
+            return t;
+        }
+
+        /// <summary>
+        /// 数値での掛け算, IDだけ遷移させる，交換則を満たす
+        /// </summary>
+        /// <param name="t"></param>
+        /// <param name="v"></param>
+        /// <returns></returns>
+        public static Tone operator *(Element v, Tone t)
+        {
+            t.ToneID = (t.ToneID * v).Number;
+            return t;
+        }
     }
 
     /// <summary>
@@ -160,6 +184,7 @@ namespace Musical
             }
             private set { this.Name = value; }
         }
+        public Tone Root { get; private set; }
         public Tone Third { get; private set; }
         public Tone Fifth { get; private set; }
         public Tone Seventh { get; private set; }
@@ -175,6 +200,9 @@ namespace Musical
             bool isTone = true;     // 構成音判定
             switch (t.Type)
             {
+                case ToneType.Root:
+                    this.Root = t;
+                    break;
                 case ToneType.Third:
                     this.Third = t;
                     break;
@@ -240,6 +268,38 @@ namespace Musical
             this.Seventh = chord.Seventh;
             this.OnChord = chord.OnChord;
             this.Name = chord.Name;
+        }
+
+        /// <summary>
+        /// コードと音の掛け算
+        /// </summary>
+        /// <param name="retval"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        public static Chord operator *(Chord retval, Element b)
+        {
+            retval.Root = retval.Root * b;
+            retval.Third = retval.Third * b;
+            retval.Fifth = retval.Fifth * b;
+            retval.Seventh = retval.Seventh * b;
+            retval.OnChord = retval.OnChord * b;
+            return retval;
+        }
+
+        /// <summary>
+        /// コードと音の掛け算
+        /// </summary>
+        /// <param name="retval"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        public static Chord operator *(Element b, Chord retval)
+        {
+            retval.Root = retval.Root * b;
+            retval.Third = retval.Third * b;
+            retval.Fifth = retval.Fifth * b;
+            retval.Seventh = retval.Seventh * b;
+            retval.OnChord = retval.OnChord * b;
+            return retval;
         }
 
         public Chord(string name) : base()
