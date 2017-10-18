@@ -20,6 +20,58 @@ namespace Musical
     }
 
     /// <summary>
+    /// 音階名の構造体
+    /// </summary>
+    public struct PitchName
+    {
+        public string Name { get; private set; }
+
+        private static readonly ReadOnlyCollection<PitchName> pitches = Array.AsReadOnly(new PitchName[]
+        {
+            new PitchName("C"),
+            new PitchName("C#"),
+            new PitchName("D"),
+            new PitchName("D#"),
+            new PitchName("E"),
+            new PitchName("F"),
+            new PitchName("F#"),
+            new PitchName("G"),
+            new PitchName("G#"),
+            new PitchName("A"),
+            new PitchName("A#"),
+            new PitchName("B")
+        });
+
+        /// <summary>
+        /// 非公開コンストラクタ
+        /// </summary>
+        /// <param name="name"></param>
+        private PitchName(string name = "")
+        {
+            this.Name = name;
+        }
+
+        /// <summary>
+        /// 音階IDから音階名を得られる．絶対単位なので扱いに注意．
+        /// </summary>
+        /// <param name="id"></param>
+        public PitchName(int id)
+        {
+            this.Name = pitches[id].Name;
+        }
+
+        /// <summary>
+        /// コピーコンストラクタ
+        /// </summary>
+        /// <param name="p"></param>
+        public PitchName(PitchName p)
+        {
+            this.Name = p.Name;
+        }
+    }
+
+
+    /// <summary>
     /// 構成音
     /// </summary>
     public struct Tone
@@ -100,7 +152,14 @@ namespace Musical
     /// </summary>
     public class Chord : Group
     {
-        public string Name { get; private set; }
+        public string Name {
+            get {
+                if (this.OnChord.ToneID == 0)
+                    return this.Name;
+                return "";
+            }
+            private set { this.Name = value; }
+        }
         public Tone Third { get; private set; }
         public Tone Fifth { get; private set; }
         public Tone Seventh { get; private set; }
@@ -144,6 +203,7 @@ namespace Musical
         {
             foreach (var l in list)
                 InitializeTones(l);
+            this.Name = DetectChordName();
         }
 
         /// <summary>
@@ -154,6 +214,7 @@ namespace Musical
         {
             foreach (var l in list)
                 InitializeTones(l.Number);
+            this.Name = DetectChordName();
         }
 
         /// <summary>
@@ -164,6 +225,7 @@ namespace Musical
         {
             foreach (var l in g.List)
                 InitializeTones(l.Number);
+            this.Name = DetectChordName();
         }
 
         /// <summary>
@@ -177,6 +239,7 @@ namespace Musical
             this.Fifth = chord.Fifth;
             this.Seventh = chord.Seventh;
             this.OnChord = chord.OnChord;
+            this.Name = chord.Name;
         }
 
         public Chord(string name) : base()
@@ -184,33 +247,11 @@ namespace Musical
             
         }
 
-        private string NamingThird()
-        {
-            return this.Third.Name;
-        }
-
-        private string NamingFifth()
-        {
-            return this.Fifth.Name;
-        }
-
-        private string NamingSeventh()
-        {
-            return this.Seventh.Name;
-        }
-
-        private string DetectChordName(List<int> list)
+        private string DetectChordName()
         {
             string name = "";
-            
+            name += this.Third.Name + this.Seventh.Name + this.Fifth.Name;
             return name;
-        }
-
-        private static List<int> DetectChordList(string name)
-        {
-            List<int> retval = new List<int>();
-
-            return retval;
         }
     }
 }
