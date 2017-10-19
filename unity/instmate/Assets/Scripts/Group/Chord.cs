@@ -90,6 +90,11 @@ namespace Musical
             return tones[Element.MusicalMod(id)];
         }
 
+        public static Tone GetTone(Tone t)
+        {
+            return tones[Element.MusicalMod(t.ToneID)];
+        }
+
         /// <summary>
         /// 構成音の配列
         /// </summary>
@@ -176,11 +181,15 @@ namespace Musical
     /// </summary>
     public class Chord : Group
     {
+        /// <summary>
+        /// コード名，絶対的な音階名が付与される
+        /// </summary>
         public string Name {
             get {
-                if (this.OnChord.ToneID == 0)
-                    return this.Name;
-                return "";
+                string name = DetectChordName();
+                if (this.OnChord.ToneID != 0)
+                    return name + "/" + Tone.GetTone(this.OnChord);
+                return name;
             }
             private set { this.Name = value; }
         }
@@ -309,9 +318,11 @@ namespace Musical
 
         private string DetectChordName()
         {
-            string name = "";
-            name += this.Third.Name + this.Seventh.Name + this.Fifth.Name;
-            return name;
+            return 
+                Tone.GetTone(this.Root) +
+                this.Third.Name +
+                this.Seventh.Name +
+                this.Fifth.Name;
         }
     }
 }
